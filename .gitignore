@@ -1,6 +1,6 @@
 *~
 knp.byte
-knp.opt
+knp.native
 _build
 ocamerl/ocamerl.mllib
 _tags
