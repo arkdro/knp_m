@@ -1,3 +1,6 @@
+knp.byte
+knp.opt
+_build
 ocamerl/ocamerl.mllib
 _tags
 myocamlbuild.ml
