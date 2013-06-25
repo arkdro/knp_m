@@ -1,2 +1,4 @@
+open Opts
+
 let () =
-    print_endline "ok"
+    Opts.run ()
