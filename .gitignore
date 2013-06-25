@@ -1,0 +1,7 @@
+ocamerl/ocamerl.mllib
+_tags
+myocamlbuild.ml
+setup.data
+setup.log
+setup.ml
+*.bak

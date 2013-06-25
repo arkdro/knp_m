@@ -1,0 +1,12 @@
+OASISFormat: 0.2
+Name:        knp
+Version:     0.1
+Synopsis:    knp
+Authors:     knp
+License:     MIT
+
+Executable ka
+  Path:       src
+  BuildTools: ocamlbuild
+  MainIs:     knp.ml
+  
