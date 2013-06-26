@@ -1,6 +1,7 @@
 open Arg
 open Pcre
 
+open Item
 open Dim
 
 let read_data verbose ifile = ()
@@ -12,7 +13,7 @@ let get_pars verbose ifile =
     ("-i", Set_string ifile, "input file");
     ("-v", Set_int verbose, "verbose (default: 1)")
   ] in
-  let _ = parse pars (fun x -> ()) usage_text in
+  let _ = parse pars (fun _ -> ()) usage_text in
   if (not (Sys.file_exists !ifile)) then
     (Printf.printf "no input file exist: %s\n" !ifile;
      assert false)
@@ -53,7 +54,10 @@ let parse_lines lines =
     | None -> false)
     items in
   assert (n_items = List.length filtered);
-  (n_items, capacity, filtered)
+  let items2 = List.map (function
+    | Some (n1, n2) -> Item.make n1 n2
+  ) filtered in
+  (n_items, capacity, items2)
 
 let read_data verbose file =
   let lines = read_file file in
