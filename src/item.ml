@@ -17,3 +17,6 @@ let compare i1 i2 =
   then -1
   else 0
 
+let string i =
+  let Item (Val v, Wei w) = i in
+  Printf.sprintf "%d, %d" v w
