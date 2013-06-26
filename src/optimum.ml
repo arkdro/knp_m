@@ -8,9 +8,17 @@ let add_whole acc acc_int capacity item =
   let new_capacity = capacity - w in
   new_acc, new_acc_int, new_capacity
 
-let add_part = add_whole
+let add_part acc acc_int capacity item =
+  let w = Item.weight item in
+  let v = Item.value item in
+  let frac = (float_of_int capacity) /. (float_of_int w) in
+  let v_frac = (float_of_int v) *. frac in
+  let new_acc = acc +. v_frac in
+  let new_capacity = 0 in
+  new_acc, acc_int, new_capacity
 
 let rec adding acc acc_int capacity = function
+  | _ when capacity = 0 -> acc, acc_int
   | [] -> acc, acc_int
   | h :: t ->
     let w = Item.weight h in
