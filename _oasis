@@ -10,4 +10,6 @@ Executable ka
   BuildTools: ocamlbuild
   MainIs:     knp.ml
   BuildDepends: pcre
+  ByteOpt: -w A
+  NativeOpt: -w A
   
