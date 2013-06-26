@@ -9,4 +9,5 @@ Executable ka
   Path:       src
   BuildTools: ocamlbuild
   MainIs:     knp.ml
+  BuildDepends: pcre
   
