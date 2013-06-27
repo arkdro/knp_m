@@ -74,5 +74,7 @@ let calc (n_items, capacity, items) =
   let str = String.concat "\n" strs in
   Printf.printf "strings:\n%s\n" str;
   let res = iter_items capacity items in
+  let max_val = Point.get_point (n_items - 1) (capacity - 1) 0 res in
+  Printf.printf "max val: %s\n" (Int64.to_string max_val);
   ()
 
