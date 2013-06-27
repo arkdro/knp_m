@@ -2,9 +2,9 @@ open String
 
 let get_prev_total_vals cur_c c item_idx wei table =
   if item_idx = 0
-  then (0L, 0L)
+  then (0, 0)
   else if cur_c < 0
-  then (0L, 0L)
+  then (0, 0)
   else let prev_x = item_idx - 1 in
        let prev_y1 = cur_c - wei in
        let prev_y2 = cur_c in
@@ -26,7 +26,7 @@ let choose_and_set_items cur_c c item_idx items table =
   let value = Item.value items.(item_idx) in
   let wei = Item.weight items.(item_idx) in
   let (prev1, prev2) = get_prev_total_vals cur_c c item_idx wei table in
-  let new_sum_val = Int64.add (Int64.of_int value) prev1 in
+  let new_sum_val = value + prev1 in
   if prev2 < new_sum_val
   then set_new_val cur_c c item_idx new_sum_val table
   else copy_prev_val cur_c item_idx c table
@@ -61,7 +61,7 @@ let iter_items c items =
   let item_idx = 0 in
   let width = List.length (Array.to_list items) in
   let table = Bigarray.Array2.create
-    Bigarray.int64 Bigarray.c_layout width c in
+    Bigarray.int Bigarray.c_layout width c in
   Printf.printf "iter-items table filled\n";
   iter_items_aux c item_idx items table
 
@@ -75,6 +75,6 @@ let calc (n_items, capacity, items) =
   Printf.printf "strings:\n%s\n" str;
   let res = iter_items capacity items in
   let max_val = Point.get_point (n_items - 1) (capacity - 1) 0 res in
-  Printf.printf "max val: %s\n" (Int64.to_string max_val);
+  Printf.printf "max val: %d\n" max_val;
   ()
 

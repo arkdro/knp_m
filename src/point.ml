@@ -2,9 +2,9 @@ exception Wrong_coord of string * int
 
 let get_point x y height table =
   if x < 0
-  then 0L
+  then 0
   else if y < 0
-  then 0L
+  then 0
   else
     (* table.{x, y} *)
     Bigarray.Array2.get table x y
