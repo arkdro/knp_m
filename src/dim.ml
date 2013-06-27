@@ -52,7 +52,7 @@ let iter_one_item c item_idx items table =
 
 let rec iter_items_aux c item_idx items table =
   Printf.printf "iter_items_aux %d\n" item_idx;
-  if item_idx >= List.length (Array.to_list items)
+  if item_idx >= Array.length items
   then table
   else let new_table = iter_one_item c item_idx items table in
        iter_items_aux c (item_idx + 1) items new_table
