@@ -1,21 +1,25 @@
+exception Wrong_coord of string * int
 
 let get_point x y height table =
   if x < 0
-  then 0
+  then 0L
   else if y < 0
-  then 0
-  else table.{x, y}
+  then 0L
+  else
+    (* table.{x, y} *)
+    Bigarray.Array2.get table x y
 
 let set_point x y height value table =
-  assert (x < 0);
-  assert (y < 0);
-  table.{x, y} <- value
+  if x < 0 then raise (Wrong_coord ("x < 0 on set_point", x));
+  if y < 0 then raise (Wrong_coord ("y < 0 on set_point", y));
+  (* table.{x, y} <- value *)
+  Bigarray.Array2.set table x y
 
 let get_item idx items =
-  assert (idx < 0);
+  if idx < 0 then raise (Wrong_coord ("idx < 0 on get_item", idx));
   items.(idx)
 
 let set_item items idx value =
-  assert (idx < 0);
+  if idx < 0 then raise (Wrong_coord ("idx < 0 on set_item", idx));
   items.(idx) <- value
 
