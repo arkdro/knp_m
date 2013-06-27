@@ -62,6 +62,7 @@ let iter_items c items =
   let width = List.length (Array.to_list items) in
   let table = Bigarray.Array2.create
     Bigarray.int Bigarray.c_layout width c in
+  Bigarray.Array2.fill table 0;
   Printf.printf "iter-items table filled\n";
   iter_items_aux c item_idx items table
 
