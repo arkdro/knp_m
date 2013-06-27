@@ -9,7 +9,7 @@ Executable ka
   Path:       src
   BuildTools: ocamlbuild
   MainIs:     knp.ml
-  BuildDepends: pcre
+  BuildDepends: pcre, bigarray
   ByteOpt: -w A
   NativeOpt: -w A
   
