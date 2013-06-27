@@ -1,8 +1,5 @@
 open String
 
-(* open Item *)
-(* open Optimum *)
-
 let get_prev_total_vals cur_c c item_idx wei table =
   if item_idx = 0
   then (0L, 0L)
@@ -29,7 +26,7 @@ let choose_and_set_items cur_c c item_idx items table =
   let value = Item.value items.(item_idx) in
   let wei = Item.weight items.(item_idx) in
   let (prev1, prev2) = get_prev_total_vals cur_c c item_idx wei table in
-  let new_sum_val = value + prev1 in
+  let new_sum_val = Int64.add (Int64.of_int value) prev1 in
   if prev2 < new_sum_val
   then set_new_val cur_c c item_idx new_sum_val table
   else copy_prev_val cur_c item_idx c table
@@ -65,16 +62,17 @@ let iter_items c items =
   let width = List.length (Array.to_list items) in
   let table = Bigarray.Array2.create
     Bigarray.int64 Bigarray.c_layout width c in
-  Printf.printf "iter-items table filled";
+  Printf.printf "iter-items table filled\n";
   iter_items_aux c item_idx items table
 
 let calc (n_items, capacity, items) =
   let opt, opt_int = Optimum.calc (n_items, capacity, items) in
   Printf.printf "opt: %f, opt_int: %d\n" opt opt_int;
-  let items_list = Array.of_list items in
+  let items_list = Array.to_list items in
   let sorted = List.rev (List.sort Item.compare items_list) in
   let strs = List.map Item.string sorted in
   let str = String.concat "\n" strs in
   Printf.printf "strings:\n%s\n" str;
+  let res = iter_items capacity items in
   ()
 
