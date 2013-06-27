@@ -13,7 +13,7 @@ let set_point x y height value table =
   if x < 0 then raise (Wrong_coord ("x < 0 on set_point", x));
   if y < 0 then raise (Wrong_coord ("y < 0 on set_point", y));
   (* table.{x, y} <- value *)
-  Bigarray.Array2.set table x y
+  Bigarray.Array2.set table x y value
 
 let get_item idx items =
   if idx < 0 then raise (Wrong_coord ("idx < 0 on get_item", idx));
