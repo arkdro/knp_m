@@ -23,3 +23,15 @@ let set_item items idx value =
   if idx < 0 then raise (Wrong_coord ("idx < 0 on set_item", idx));
   items.(idx) <- value
 
+let dump_table tab =
+  let w = Bigarray.Array2.dim1 tab in
+  let h = Bigarray.Array2.dim2 tab in
+  for x = 0 to w - 1 do
+    for y = 0 to h - 1 do
+      let value = get_point x y h tab in
+      Printf.printf "%d " value
+    done;
+    Printf.printf "\n"
+  done;
+  Printf.printf "\n"
+
