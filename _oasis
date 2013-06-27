@@ -12,4 +12,5 @@ Executable ka
   BuildDepends: pcre, bigarray
   ByteOpt: -w A -g
   NativeOpt: -w A
+  CompiledObject: native
   
