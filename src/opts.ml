@@ -57,7 +57,7 @@ let parse_lines lines =
   let items2 = List.map (function
     | Some (n1, n2) -> Item.make n1 n2
   ) filtered in
-  (n_items, capacity, items2)
+  (n_items, capacity, Array.of_list items2)
 
 let read_data verbose file =
   let lines = read_file file in

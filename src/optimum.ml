@@ -30,6 +30,7 @@ let rec adding acc acc_int capacity = function
     adding new_acc new_acc_int new_capacity t
 
 let calc (n_items, capacity, items) =
-  let sorted = List.rev (List.sort Item.compare items) in
+  let items_list = Array.to_list items in
+  let sorted = List.rev (List.sort Item.compare items_list) in
   adding 0.0 0 capacity sorted
 
