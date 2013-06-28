@@ -69,11 +69,6 @@ let iter_items c items =
 let calc (n_items, capacity, items) =
   let opt, opt_int = Optimum.calc (n_items, capacity, items) in
   Printf.printf "opt: %f, opt_int: %d\n" opt opt_int;
-  let items_list = Array.to_list items in
-  let sorted = List.rev (List.sort Item.compare items_list) in
-  let strs = List.map Item.string sorted in
-  let str = String.concat "\n" strs in
-  Printf.printf "strings:\n%s\n" str;
   let res = iter_items capacity items in
   let max_val = Point.get_point (n_items - 1) (capacity - 1) 0 res in
   Printf.printf "max val: %d\n" max_val;
