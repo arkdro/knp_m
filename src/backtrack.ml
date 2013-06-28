@@ -32,3 +32,12 @@ let backtrack capacity items table =
   let acc = Array.make (Array.length items) 0 in
   backtrack_aux y capacity x items acc table
 
+let print items =
+  let rec print_aux x items =
+    if x >= Array.length items
+    then Printf.printf "\n"
+    else let _ = Printf.printf "%d " items.(x) in
+         print_aux (x + 1) items
+  in
+  print_aux 0 items
+
