@@ -72,5 +72,7 @@ let calc (n_items, capacity, items) =
   let res = iter_items capacity items in
   let max_val = Point.get_point (n_items - 1) (capacity - 1) 0 res in
   Printf.printf "max val: %d\n" max_val;
-  ()
+  let used_items = Backtrack.backtrack capacity items res in
+  Backtrack.print used_items;
+  (max_val, res, used_items)
 
