@@ -5,7 +5,8 @@ let do_not_use_item cur_c item_idx acc =
   (new_item_idx, cur_c, acc)
 
 let use_item cur_c c item_idx items acc =
-  let (_, wei) = Point.get_item item_idx items in
+  let item = Point.get_item item_idx items in
+  let wei = Item.weight item in
   let new_item_idx = item_idx - 1 in
   let new_cur_c = cur_c - wei in
   let _ = Point.set_item acc item_idx 1 in
@@ -28,6 +29,6 @@ let rec backtrack_aux cur_c c item_idx items acc table =
 let backtrack capacity items table =
   let x = (Array.length items) - 1 in
   let y = capacity - 1 in
-  let acc = Array.make x 0 in
+  let acc = Array.make (Array.length items) 0 in
   backtrack_aux y capacity x items acc table
 
