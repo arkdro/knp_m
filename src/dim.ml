@@ -51,7 +51,7 @@ let iter_one_item c item_idx items table =
   iter_one_item_aux cur_c c item_idx items table
 
 let rec iter_items_aux c item_idx items table =
-  Printf.printf "iter_items_aux %d\n" item_idx;
+  Printf.eprintf "iter_items_aux %d\n" item_idx;
   if item_idx >= Array.length items
   then table
   else let new_table = iter_one_item c item_idx items table in
@@ -63,12 +63,12 @@ let iter_items c items =
   let table = Bigarray.Array2.create
     Bigarray.int Bigarray.c_layout width c in
   Bigarray.Array2.fill table 0;
-  Printf.printf "iter-items table filled\n";
+  Printf.eprintf "iter-items table filled\n";
   iter_items_aux c item_idx items table
 
 let calc (n_items, capacity, items) =
   let opt, opt_int = Optimum.calc (n_items, capacity, items) in
-  Printf.printf "opt: %f, opt_int: %d\n" opt opt_int;
+  Printf.eprintf "opt: %f, opt_int: %d\n" opt opt_int;
   let res = iter_items capacity items in
   let max_val = Point.get_point (n_items - 1) (capacity - 1) 0 res in
   Printf.printf "max val: %d\n" max_val;

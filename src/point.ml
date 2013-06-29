@@ -29,9 +29,9 @@ let dump_table tab =
   for x = 0 to w - 1 do
     for y = 0 to h - 1 do
       let value = get_point x y h tab in
-      Printf.printf "%d " value
+      Printf.eprintf "%d " value
     done;
-    Printf.printf "\n"
+    Printf.eprintf "\n"
   done;
-  Printf.printf "\n"
+  Printf.eprintf "\n"
 
