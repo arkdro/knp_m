@@ -7,10 +7,11 @@ open Dim
 let read_data verbose ifile = ()
 let print_result res = ()
 
-let get_pars verbose ifile =
+let get_pars verbose ifile max =
   let usage_text = "possible params" in
   let pars = [
     ("-i", Set_string ifile, "input file");
+    ("-m", Set_int max, "max number of cells in DP table (default: 726000000)");
     ("-v", Set_int verbose, "verbose (default: 1)")
   ] in
   let _ = parse pars (fun _ -> ()) usage_text in
@@ -66,8 +67,9 @@ let read_data verbose file =
 let run () =
   let ifile = ref "" in
   let verbose = ref 1 in
-  let _ = get_pars verbose ifile in
+  let max = ref 726000000 in
+  let _ = get_pars verbose ifile max in
   let in_data = read_data verbose !ifile in
-  let res = Dim.calc in_data in
+  let res = Dim.calc in_data !max in
   print_result res
 
