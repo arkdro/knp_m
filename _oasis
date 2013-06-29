@@ -10,7 +10,7 @@ Executable ka
   BuildTools: ocamlbuild
   MainIs:     knp.ml
   BuildDepends: pcre, bigarray
-  ByteOpt: -w A -g
-  NativeOpt: -w A
+  ByteOpt: -w A -g -annot
+  NativeOpt: -w A -annot
   CompiledObject: native
   
