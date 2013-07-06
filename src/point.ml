@@ -4,11 +4,11 @@ let get_point1 x line =
   if x < 0
   then 0
   else
-    Bigarray.Array1.get line x
+    Array.get line x
 
 let set_point1 x value line =
   if x < 0 then raise (Wrong_coord ("x < 0 on set_point", x));
-  Bigarray.Array1.set line x value
+  Array.set line x value
 
 let get_point2 x y height table =
   if x < 0
@@ -46,7 +46,7 @@ let dump_table tab =
   Printf.eprintf "\n"
 
 let dump_line line =
-  let len = Bigarray.Array1.dim line in
+  let len = Array.length line in
   for i = 0 to len - 1 do
     let value = get_point1 i line in
     Printf.eprintf "%d " value

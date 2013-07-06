@@ -55,13 +55,11 @@ let rotate_columns_and_table c item_idx ((_, _, cur) as acc) =
       None
     | (Some tab, _, _) ->
       for i = 0 to (c-1) do
-        tab.{item_idx, i} <- cur.{i}
+        tab.{item_idx, i} <- cur.(i)
       done;
       Some tab
   in
-  let new_column = Bigarray.Array1.create
-    Bigarray.int Bigarray.c_layout c in
-  Bigarray.Array1.fill new_column 0;
+  let new_column = Array.make c 0 in
   (new_tab, cur, new_column)
 
 let rec iter_items_aux c item_idx items ((table, prev_col, cur_col) as acc) =
@@ -79,19 +77,10 @@ let iter_items c items max =
   let item_idx = 0 in
   let width = List.length (Array.to_list items) in
   let table =
-    if (Int64.mul (Int64.of_int width) (Int64.of_int c)) <= Int64.of_int max
-    then
-      let t0 = Bigarray.Array2.create Bigarray.int Bigarray.c_layout width c in
-      Bigarray.Array2.fill t0 0;
-      Printf.eprintf "iter-items table filled\n";
-      Some t0
-    else (Printf.eprintf "iter-items too many items, table is not created\n";
-          None)
+    None
   in
-  let prev = Bigarray.Array1.create Bigarray.int Bigarray.c_layout c in
-  Bigarray.Array1.fill prev 0;
-  let cur = Bigarray.Array1.create Bigarray.int Bigarray.c_layout c in
-  Bigarray.Array1.fill cur 0;
+  let prev = Array.make c 0 in
+  let cur = Array.make c 0 in
   iter_items_aux c item_idx items (table, prev, cur)
 
 let calc (n_items, capacity, items) max =
