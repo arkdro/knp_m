@@ -1,52 +1,48 @@
 open String
 
-let get_prev_total_vals cur_c c item_idx wei (prev_col, _) =
-  if item_idx = 0
+let get_prev_total_vals cur_c c value wei (prev_col, _) =
+  if cur_c < 0
   then (0, 0)
-  else if cur_c < 0
-  then (0, 0)
-  else let prev_x = item_idx - 1 in
+  else
        let prev_y1 = cur_c - wei in
        let prev_y2 = cur_c in
        let p1 = Point.get_point1 prev_y1 prev_col in
        let p2 = Point.get_point1 prev_y2 prev_col in
        (p1, p2)
 
-let set_new_val cur_c c item_idx value (_, cur_col) =
+let set_new_val cur_c c value (_, cur_col) =
   Point.set_point1 cur_c value cur_col
 
-let copy_prev_val cur_y cur_x c (prev_col, cur_col) =
-  let prev_x = cur_x - 1 in
+let copy_prev_val cur_y c (prev_col, cur_col) =
   let value = Point.get_point1 cur_y prev_col in
   Point.set_point1 cur_y value cur_col
 
-let choose_and_set_items cur_c c item_idx items acc =
-  let value = Item.value items.(item_idx) in
-  let wei = Item.weight items.(item_idx) in
-  let (prev1, prev2) = get_prev_total_vals cur_c c item_idx wei acc in
+let choose_and_set_items cur_c c value weight acc =
+  let (prev1, prev2) = get_prev_total_vals cur_c c value weight acc in
   let new_sum_val = value + prev1 in
   if prev2 < new_sum_val
-  then set_new_val cur_c c item_idx new_sum_val acc
-  else copy_prev_val cur_c item_idx c acc
+  then set_new_val cur_c c new_sum_val acc
+  else copy_prev_val cur_c c acc
 
-let use_item item_idx c items =
-  let wei = Item.weight items.(item_idx) in
+let use_item c wei =
   not (wei > (c + 1))
 
-let update_table cur_c c item_idx items acc =
-  if use_item item_idx cur_c items
-  then choose_and_set_items cur_c c item_idx items acc
-  else copy_prev_val cur_c item_idx c acc
+let update_table cur_c c value weight acc =
+  if use_item cur_c weight
+  then choose_and_set_items cur_c c value weight acc
+  else copy_prev_val cur_c c acc
 
-let rec iter_one_item_aux cur_c c item_idx items acc =
+let rec iter_one_item_aux cur_c c value weight acc =
   if cur_c >= c
   then acc
-  else let _ = update_table cur_c c item_idx items acc in
-       iter_one_item_aux (cur_c + 1) c item_idx items acc
+  else let _ = update_table cur_c c value weight acc in
+       iter_one_item_aux (cur_c + 1) c value weight acc
 
 let iter_one_item c item_idx items acc =
   let cur_c = 0 in
-  iter_one_item_aux cur_c c item_idx items acc
+  let value = Item.value items.(item_idx) in
+  let weight = Item.weight items.(item_idx) in
+  iter_one_item_aux cur_c c value weight acc
 
 (* item_idx - just filled current column number *)
 let rotate_columns_and_table c item_idx ((_, _, cur) as acc) =
